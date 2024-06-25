@@ -9,10 +9,8 @@ const VerifyLoginOTP = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [otpModeEmail, setOtpModeEmail] = useState(false);
   const [otpMode, setOtpMode] = useState(location.state.otp_mode);
-  const [phone, setPhone] = useState(location.state.phone);
   const [email, setEmail] = useState(location.state.email);
   const [refNo, setRefNo] = useState(location.state.ref_no);
-  const phoneLastChar = location.state.phone.slice(-4);
   const isUserExists = location.state.isUserExists;
 
   //form inputs
@@ -30,7 +28,7 @@ const VerifyLoginOTP = () => {
           'Content-Type': 'application/json'
         }),
         body: JSON.stringify({
-          phone: phone
+          email: email
         }),
       });
       let resJson = await res.json();
@@ -77,7 +75,7 @@ const VerifyLoginOTP = () => {
           if (isUserExists === 'false') {
             navigate('/' + Urls.REGISTER, {
               state: {
-                phone: phone
+                email: email
               }
             })
           } else {
@@ -92,7 +90,7 @@ const VerifyLoginOTP = () => {
                 body: JSON.stringify({
                   otp: otp,
                   ref_no: refNo,
-                  phone: phone
+                  email: email
                 }),
               });
               let resResponseJson = await loginResponse.json();
@@ -122,7 +120,7 @@ const VerifyLoginOTP = () => {
       {otpMode === 'email' ?
         <h5 className='mt-3 text-center'>Please enter the OTP sent to the following email id. <br /> {email}</h5>
         :
-        <h5 className='mt-3 text-center'>Enter the OTP sent via sms to your phone. <br /> (+91 xxxxxx{phoneLastChar})</h5>
+        <h5 className='mt-3 text-center'>Enter the OTP sent via sms to your phone. <br /> {email}</h5>
       }
       <div className='auth-form mt-5'>
         <form onSubmit={handleSubmit}>

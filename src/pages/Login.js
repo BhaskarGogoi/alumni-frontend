@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Urls from '../api/Urls';
 
 const Login = () => {
-  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [otp_mode, set_otp_mode] = useState("");
   const [message, setMessage] = useState("");
@@ -24,7 +23,7 @@ const Login = () => {
           'Content-Type': 'application/json'
         }),
         body: JSON.stringify({
-          phone: phone
+          email: email
         }),
       });
       let resJson = await res.json();
@@ -34,14 +33,13 @@ const Login = () => {
         // } else {
         //   setOtpModeEmail(false);
         // }
-        setPhone("");
+        setEmail("")
         setButtonDisable(false);
         setIsLoading(false);
         setMessage(resJson.message);
         navigate('/verify-login-otp', {
           state: {
             otp_mode: resJson.otp_mode,
-            phone: resJson.phone,
             email: resJson.email,
             isUserExists: resJson.isUserExists,
             ref_no: resJson.ref_no,
@@ -79,9 +77,9 @@ const Login = () => {
               <h2>LOGIN / REGISTER</h2><br />
             </center>
             <form onSubmit={handleSubmit}>
-              <label>Phone</label>
-              <input type='number' value={phone} required onChange={(e) => setPhone(e.target.value)} />
-              {isError ? <small className='text-danger'>{isError.phone}</small> : ""}
+              <label>Email</label>
+              <input type='text' value={email} required onChange={(e) => setEmail(e.target.value)} />
+              {isError ? <small className='text-danger'>{isError.email}</small> : ""}
               <button type='submit' disabled={buttonDisable}>{isLoading ? <div class='spinner-border text-light' role='status'></div> : 'Get OTP'}</button>
             </form>
             {/* <p className='mt-3'>Don't have an account? <a onClick={goToRegister} className='text-primary'>Register Here</a></p> */}

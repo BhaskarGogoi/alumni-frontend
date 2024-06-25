@@ -14,7 +14,7 @@ const Register = () => {
 
      //form inputs
      const [name, setName] = useState("");
-     const [email, setEmail] = useState("");
+     const [phone, setPhone] = useState("");
 
     let handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,8 +29,8 @@ const Register = () => {
             }),
             body: JSON.stringify({
               name: name,
-              email: email,
-              phone: parseInt(location.state.phone, 0),
+              phone: phone,
+              email: location.state.email,
             }),
           });
           let resJson = await res.json();
@@ -63,8 +63,8 @@ const Register = () => {
                     <h4 onClick={goBack}><i class="fas fa-arrow-left"></i></h4>
                     <h2>REGISTER</h2><br/>
                     <form onSubmit={handleSubmit}>                    
-                        <label>Email</label>
-                        <input type='email' value={email} required onChange={(e) => setEmail(e.target.value)}/>
+                        <label>Phone</label>
+                        <input type='number' value={phone} required onChange={(e) => setPhone(e.target.value)}/>
                         <button type='submit' disabled={buttonDisable}>{isLoading? <div className='spinner-border text-light' role='status'></div> : 'Submit'}</button>
                     </form>
                     <div className="message">{message ? <p>{message}</p> : null}</div>
